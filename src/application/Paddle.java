@@ -13,33 +13,34 @@ public class Paddle extends Entity
 	public static final int HEIGHT = 50;
 	public static final Paint COLOR = Color.GREEN;
 	
-	private Dimension _movementBounds;
-
-	public Paddle(int x, int y, Dimension movementBounds, int speed, Pane root) {
-		super(x, y);
+	public Paddle(int x, int y, Rectangle movementBounds, int speed, Pane root) {
+		super(x, y, movementBounds);
 		
 		setSpeed(speed);
 		setBounds(new Rectangle(getX(), getY(), WIDTH, HEIGHT));
 		getBounds().setStroke(COLOR);
 		
-		_movementBounds = movementBounds;
-		
 		root.getChildren().add(getBounds());
+	}
+	
+	public boolean update()
+	{
+		return true;
 	}
 	
 	public void moveUp()
 	{
-		if (_movementBounds.getHeight() - (getY() + getSpeed()) > 0)
-		{
-			
+		if (getMovementBounds().contains(getX(), getY() - getSpeed()))
+		{	
 			setY(getY() - getSpeed());
 			getBounds().setY(getY());
 		}
+
 	}
 	
 	public void moveDown()
 	{
-		if (_movementBounds.getHeight() - (getY() + getSpeed()) < _movementBounds.getHeight())
+		if (getMovementBounds().contains(getX(), getY() + getSpeed()))
 		{
 			setY(getY() + getSpeed());
 			getBounds().setY(getY());

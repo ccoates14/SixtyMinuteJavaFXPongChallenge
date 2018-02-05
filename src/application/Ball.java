@@ -1,7 +1,5 @@
 package application;
 
-import java.awt.Dimension;
-
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -14,46 +12,38 @@ public class Ball extends Entity{
 	
 	public static final Paint COLOR = Color.RED;
 	
-	private final int BASE_SPEED = 40;
-	
-	private Entity _solidEntities[];
-	private Dimension _movementBounds;
+	private final int BASE_SPEED = 7;
 
-	public Ball(int x, int y, Pane root, Dimension movementBounds, Entity solidEntities[]) {
-		super(x, y);
-		
-		
+	public Ball(int x, int y, Pane root, Rectangle movementBounds) {
+		super(x, y, movementBounds);
 		
 		setBounds(new Rectangle(getX(), getY(), WIDTH, HEIGHT));
-		setSpeed((Math.random() * BASE_SPEED * Math.random() > .5 ? -1 : 1) + 3);
+		setSpeed((int) (Math.random() * BASE_SPEED) + 1);
 		
 		getBounds().setStroke(COLOR);
 		
 		root.getChildren().add(getBounds());
 		
-		_solidEntities = solidEntities;
-		_movementBounds = movementBounds;
-		
 	}
 	
-	public void update()
+	public boolean update()
 	{
 		boolean bounced = false;
 		
-		for (int i = 0; i < _solidEntities.length && !bounced; i++)
+		for (int i = 0; i < EntitiesUtil.getEntities().size() && !bounced; i++)
 		{
-			if (getBounds().intersects(_solidEntities[i].getBounds().getBoundsInLocal()))
+			if (EntitiesUtil.getEntities().get(i) != this
+					&&
+					getBounds().getBoundsInParent().intersects(EntitiesUtil.getEntities().get(i).getBounds().getBoundsInParent()))
 			{
 				bounced = true;
 			}
+
 		}
 		
 		if (!bounced)
 		{
-			if (_movementBounds.getWidth() - getX() <= 0 ||
-					_movementBounds.getWidth() - getX() >= _movementBounds.getWidth()
-					|| _movementBounds.getHeight() - getY() <= 0 ||
-					_movementBounds.getHeight() - getY() >= _movementBounds.getHeight())
+			if (!getMovementBounds().intersects(getBounds().getBoundsInLocal()))
 			{
 				bounced = true;
 			}
@@ -61,15 +51,8 @@ public class Ball extends Entity{
 		}
 		
 		if (bounced)
-		{
-			setSpeed((int) (getSpeed() + Math.random() * 2));
-			if (getSpeed() == 0)
-			{
-				setSpeed(Math.random() * BASE_SPEED * Math.random() > .5 ? -1 : 1);
-			}
-			
-			setSpeed(getSpeed() * -1);
-			
+		{	
+			setSpeed(getSpeed() * -1);	
 			
 		}
 		
@@ -78,6 +61,8 @@ public class Ball extends Entity{
 		
 		getBounds().setX(getX());
 		getBounds().setY(getY());
+		
+		return true;
 	}
 
 }

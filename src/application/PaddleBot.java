@@ -1,14 +1,13 @@
 package application;
 
-import java.awt.Dimension;
-
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 public class PaddleBot extends Paddle{
 	
 	private Ball _ball;
 
-	public PaddleBot(int x, int y, Dimension movementBounds, int speed, Pane root) {
+	public PaddleBot(int x, int y, Rectangle movementBounds, int speed, Pane root) {
 		super(x, y, movementBounds, speed, root);
 
 	}
@@ -18,7 +17,7 @@ public class PaddleBot extends Paddle{
 		_ball = b;
 	}
 	
-	public void update()
+	public boolean update()
 	{
 		if (_ball.getY() > getY() + getBounds().getHeight())
 		{
@@ -28,6 +27,8 @@ public class PaddleBot extends Paddle{
 		{
 			moveUp();
 		}
+		
+		return true;
 	}
 
 }
