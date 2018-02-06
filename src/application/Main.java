@@ -24,7 +24,7 @@ public class Main extends Application
 			Pane root = new BorderPane();
 			Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
-			final int PADDLE_SPEED_Y = 10;
+			final int PADDLE_SPEED_Y = 7;
 			final int PLAYER_X = 10;
 			final int PLAYER_Y = (int) scene.getHeight() / 2;
 			
@@ -50,6 +50,7 @@ public class Main extends Application
 	           
 		    	ball.update();
 		    	paddleBot.update();
+		    	playerPaddle.update();
 		    	
 		    	if (Input.ARROW_UP)
 		    	{

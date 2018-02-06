@@ -11,6 +11,9 @@ public class Paddle extends Entity
 	public static final int HEIGHT = 50;
 	public static final Paint COLOR = Color.GREEN;
 	
+	private boolean _movedUp = false;
+	private boolean _movedDown = false;
+	
 	public Paddle(int x, int y, Rectangle movementBounds, int speed, Pane root) {
 		super(x, y, movementBounds);
 
@@ -24,7 +27,19 @@ public class Paddle extends Entity
 	
 	public boolean update()
 	{
+		_movedUp = false;
+		_movedDown = false;
 		return true;
+	}
+	
+	public boolean movedUp()
+	{
+		return _movedUp;
+	}
+	
+	public boolean movedDown()
+	{
+		return _movedDown;
 	}
 	
 	public void moveUp()
@@ -33,6 +48,8 @@ public class Paddle extends Entity
 		{	
 			setY((int) (getY() - getYSpeed()));
 			getBounds().setY(getY());
+			_movedUp = true;
+			_movedDown = false;
 		}
 
 	}
@@ -43,6 +60,8 @@ public class Paddle extends Entity
 		{
 			setY((int) (getY() + getYSpeed()));
 			getBounds().setY(getY());
+			_movedDown = true;
+			_movedUp = false;
 		}
 	}
 	

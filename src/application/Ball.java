@@ -23,14 +23,22 @@ public class Ball extends Entity{
 		
 		root.getChildren().add(getBounds());
 		
-		setXSpeed(generateRandomSpeed());
-		setYSpeed(generateRandomSpeed());
+		setXSpeed(0);
+		setYSpeed(0);
 		
+		while (getXSpeed() == getYSpeed())
+		{
+			setXSpeed(generateRandomSpeed());
+			setYSpeed(generateRandomSpeed());
+		}
+
 	}
 	
 	public boolean update()
 	{
 		boolean bouncedPaddle = false;
+		boolean paddleMovedUp = false;
+		boolean paddleMovedDown = false;
 		
 		for (int i = 0; i < EntitiesUtil.getEntities().size() && !bouncedPaddle; i++)
 		{
@@ -39,6 +47,9 @@ public class Ball extends Entity{
 					getBounds().getBoundsInParent().intersects(EntitiesUtil.getEntities().get(i).getBounds().getBoundsInParent()))
 			{
 				bouncedPaddle = true;
+				Paddle p = ((Paddle) EntitiesUtil.getEntities().get(i));
+				paddleMovedDown = p.movedDown();
+				paddleMovedUp = p.movedUp();
 			}
 
 		}
@@ -60,6 +71,22 @@ public class Ball extends Entity{
 		else
 		{
 			setXSpeed(getXSpeed() * -1);
+			
+			if (paddleMovedUp)
+			{
+				if (getYSpeed() > 0)
+				{
+					setYSpeed(getYSpeed() * -1);
+				}
+			}
+			else if (paddleMovedDown)
+			{
+				if (getYSpeed() < 0)
+				{
+					setYSpeed(getYSpeed() * -1);
+				}
+
+			}
 		}
 		
 		setX((int) (getX() + getXSpeed()));

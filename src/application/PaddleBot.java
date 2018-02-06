@@ -23,7 +23,7 @@ public class PaddleBot extends Paddle{
 		{
 			moveDown();
 		}
-		else if (_ball.getY() < getY() - getBounds().getHeight() / 2)
+		else if (_ball.getY() < getY() - getBounds().getHeight() - getBounds().getHeight() / 2)
 		{
 			moveUp();
 		}
