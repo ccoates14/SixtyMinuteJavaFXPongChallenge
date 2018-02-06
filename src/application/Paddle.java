@@ -1,7 +1,5 @@
 package application;
 
-import java.awt.Dimension;
-
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -15,8 +13,9 @@ public class Paddle extends Entity
 	
 	public Paddle(int x, int y, Rectangle movementBounds, int speed, Pane root) {
 		super(x, y, movementBounds);
+
+		setYSpeed(speed);
 		
-		setSpeed(speed);
 		setBounds(new Rectangle(getX(), getY(), WIDTH, HEIGHT));
 		getBounds().setStroke(COLOR);
 		
@@ -30,9 +29,9 @@ public class Paddle extends Entity
 	
 	public void moveUp()
 	{
-		if (getMovementBounds().contains(getX(), getY() - getSpeed()))
+		if (getMovementBounds().contains(getX(), getY() - getYSpeed()))
 		{	
-			setY(getY() - getSpeed());
+			setY((int) (getY() - getYSpeed()));
 			getBounds().setY(getY());
 		}
 
@@ -40,9 +39,9 @@ public class Paddle extends Entity
 	
 	public void moveDown()
 	{
-		if (getMovementBounds().contains(getX(), getY() + getSpeed()))
+		if (getMovementBounds().contains(getX(), getY() + getYSpeed()))
 		{
-			setY(getY() + getSpeed());
+			setY((int) (getY() + getYSpeed()));
 			getBounds().setY(getY());
 		}
 	}

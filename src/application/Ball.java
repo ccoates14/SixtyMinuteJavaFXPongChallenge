@@ -12,57 +12,68 @@ public class Ball extends Entity{
 	
 	public static final Paint COLOR = Color.RED;
 	
-	private final int BASE_SPEED = 7;
+	private final int BASE_SPEED = 5;
 
 	public Ball(int x, int y, Pane root, Rectangle movementBounds) {
 		super(x, y, movementBounds);
 		
 		setBounds(new Rectangle(getX(), getY(), WIDTH, HEIGHT));
-		setSpeed((int) (Math.random() * BASE_SPEED) + 1);
-		
+	
 		getBounds().setStroke(COLOR);
 		
 		root.getChildren().add(getBounds());
+		
+		setXSpeed(generateRandomSpeed());
+		setYSpeed(generateRandomSpeed());
 		
 	}
 	
 	public boolean update()
 	{
-		boolean bounced = false;
+		boolean bouncedPaddle = false;
 		
-		for (int i = 0; i < EntitiesUtil.getEntities().size() && !bounced; i++)
+		for (int i = 0; i < EntitiesUtil.getEntities().size() && !bouncedPaddle; i++)
 		{
 			if (EntitiesUtil.getEntities().get(i) != this
 					&&
 					getBounds().getBoundsInParent().intersects(EntitiesUtil.getEntities().get(i).getBounds().getBoundsInParent()))
 			{
-				bounced = true;
+				bouncedPaddle = true;
 			}
 
 		}
 		
-		if (!bounced)
+		if (!bouncedPaddle)
 		{
-			if (!getMovementBounds().intersects(getBounds().getBoundsInLocal()))
+			if (getX() <= getMovementBounds().getX() ||
+					getX() >= getMovementBounds().getX() + getMovementBounds().getWidth())
 			{
-				bounced = true;
+				setXSpeed(getXSpeed() * -1);
 			}
-			
+			if (getY() <= getMovementBounds().getX() ||
+					getY() >= getMovementBounds().getY() + getMovementBounds().getHeight())
+			{
+				setYSpeed(getYSpeed() * -1);
+			}
+
+		}
+		else
+		{
+			setXSpeed(getXSpeed() * -1);
 		}
 		
-		if (bounced)
-		{	
-			setSpeed(getSpeed() * -1);	
-			
-		}
-		
-		setX(getX() + getSpeed());
-		setY(getY() + getSpeed()); 
+		setX((int) (getX() + getXSpeed()));
+		setY((int) (getY() + getYSpeed())); 
 		
 		getBounds().setX(getX());
 		getBounds().setY(getY());
 		
 		return true;
+	}
+	
+	private int generateRandomSpeed()
+	{
+		return (int) (BASE_SPEED * Math.random() * (Math.random() > .5 ? -1 : 1));
 	}
 
 }

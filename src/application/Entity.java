@@ -4,10 +4,10 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class Entity 
 {
-	private int _x, _y, _speed;
+	private int _x, _y;
+	private double _xSpeed, _ySpeed;
 	private Rectangle _bounds;
 	private Rectangle _movementBounds;
-	private double _angle;
 	
 	public Entity(int x, int y, Rectangle movementBounds)
 	{
@@ -23,29 +23,29 @@ public abstract class Entity
 		_movementBounds = r;
 	}
 	
-	public void setAngle(double angle)
-	{
-		_angle = angle;
-	}
-	
-	public double getAngle()
-	{
-		return _angle;
-	}
-	
 	public Rectangle getMovementBounds()
 	{
 		return _movementBounds;
 	}
 	
-	public void setSpeed(int speed)
+	public void setXSpeed(double xSpeed)
 	{
-		_speed = speed;
+		_xSpeed = xSpeed;
 	}
 	
-	public int getSpeed()
+	public double getXSpeed()
 	{
-		return _speed;
+		return _xSpeed;
+	}
+	
+	public void setYSpeed(double ySpeed)
+	{
+		_ySpeed = ySpeed;
+	}
+	
+	public double getYSpeed()
+	{
+		return _ySpeed;
 	}
 	
 	public void setBounds(Rectangle bounds)

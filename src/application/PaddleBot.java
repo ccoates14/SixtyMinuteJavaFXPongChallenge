@@ -19,11 +19,11 @@ public class PaddleBot extends Paddle{
 	
 	public boolean update()
 	{
-		if (_ball.getY() > getY() + getBounds().getHeight())
+		if (_ball.getY() > getY() + getBounds().getHeight() + getBounds().getHeight() / 2)
 		{
 			moveDown();
 		}
-		else if (_ball.getY() < getY() - getBounds().getHeight() / 10)
+		else if (_ball.getY() < getY() - getBounds().getHeight() / 2)
 		{
 			moveUp();
 		}
