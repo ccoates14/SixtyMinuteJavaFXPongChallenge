@@ -56,7 +56,7 @@ public class Paddle extends Entity
 	
 	public void moveDown()
 	{
-		if (getMovementBounds().contains(getX(), getY() + getYSpeed()))
+		if (getMovementBounds().contains(getX(), getY() + getYSpeed() + getBounds().getHeight()))
 		{
 			setY((int) (getY() + getYSpeed()));
 			getBounds().setY(getY());

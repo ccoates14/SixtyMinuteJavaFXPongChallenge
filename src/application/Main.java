@@ -47,6 +47,8 @@ public class Main extends Application
 		    Timeline timeline  = new Timeline(); 
 		    
 		    timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(.016), e -> {
+		    	
+		    	ball.isScored();
 	           
 		    	ball.update();
 		    	paddleBot.update();
